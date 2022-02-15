@@ -12,6 +12,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import { CustomerComponent } from './views/customer/customer.component';
 import { CustomerFormComponent } from './views/customer/customer-form/customer-form.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { CustomerFormComponent } from './views/customer/customer-form/customer-f
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
+        HttpClientModule,
         BsDropdownModule.forRoot(),
         TooltipModule.forRoot(),
         ModalModule.forRoot()

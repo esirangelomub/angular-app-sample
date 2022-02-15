@@ -1,21 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
+import {CustomerModel} from "../models/customer.model";
+import {ResponseModel} from "../models/response.model";
 
-const baseUrl = 'http://localhost:9090/api/customers';
-export interface AddressModel {
-    number: number;
-    street_name: string;
-    city: string;
-    state: string;
-    country: string;
-};
-export interface CustomerModel {
-    name: string;
-    email: string;
-    phone: string;
-    address: AddressModel
-};
+const baseUrl = 'http://localhost:9090/api/v1/customer';
 @Injectable({
     providedIn: 'root'
 })
@@ -24,23 +13,27 @@ export class CustomerService {
     constructor(private http: HttpClient) {
     }
 
-    getAll(): Observable<any> {
-        return this.http.get(baseUrl);
+    getAll(): Observable<CustomerModel[]> {
+        return this.http.get<ResponseModel<CustomerModel>>(baseUrl).pipe(
+            map(response => {
+                return response.data;
+            })
+        );
     }
 
-    get(id: number): Observable<any> {
-        return this.http.get(`${baseUrl}/${id}`);
+    get(id: number): Observable<CustomerModel> {
+        return this.http.get<CustomerModel>(`${baseUrl}/${id}`);
     }
 
-    create(data: CustomerModel): Observable<any> {
-        return this.http.post(baseUrl, data);
+    create(data: CustomerModel): Observable<CustomerModel> {
+        return this.http.post<CustomerModel>(baseUrl, data);
     }
 
-    update(id: number, data: CustomerModel): Observable<any> {
-        return this.http.put(`${baseUrl}/${id}`, data);
+    update(id: number, data: CustomerModel): Observable<CustomerModel> {
+        return this.http.put<CustomerModel>(`${baseUrl}/${id}`, data);
     }
 
-    delete(id: number): Observable<any> {
-        return this.http.delete(`${baseUrl}/${id}`);
+    delete(id: number): Observable<CustomerModel> {
+        return this.http.delete<CustomerModel>(`${baseUrl}/${id}`);
     }
 }
