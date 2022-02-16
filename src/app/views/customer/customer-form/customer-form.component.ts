@@ -51,10 +51,6 @@ export class CustomerFormComponent implements OnInit, AfterContentInit {
                 country: new FormControl({value: null, disabled: false}, [Validators.required])
             })
         });
-
-        // this.form.get('address.country')?.valueChanges.subscribe(value => {
-        //     this.form.get('address.state')?.setValue(null);
-        // })
     }
 
     load() {
