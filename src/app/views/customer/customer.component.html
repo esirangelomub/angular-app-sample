@@ -3,20 +3,7 @@
         <!--/.row-->
         <div class="row">
             <div class="my-4 col-lg-12">
-                <h4><strong>Lista de usuários</strong></h4>
-            </div>
-            <div class="col-lg-12">
-<!--                <div class="row">-->
-<!--                    <div class="col-lg-4 col-md-6 mb-2">-->
-<!--                        <label>Name/E-mail</label>-->
-<!--                        <input (keyup.enter)=list(true) type="text" [(ngModel)]="usuarioBusca.name" class="form-control">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="my-2">-->
-<!--                    <a routerLink="/usuarios/cadastrar" class="btn btn-success"><i class="fa fa-plus"></i><span class="d-none d-sm-inline"> Novo</span></a>-->
-<!--                    <button type="button" class="btn btn-primary" (click)="list(true)"><i class="fa fa-search"></i><span class="d-none d-sm-inline"> Pesquisar</span></button>-->
-<!--                    <button *ngIf="temBusca" type="button" class="btn btn-secondary" (click)="limpaLista()"><i class="fa fa-ban"></i><span class="d-none d-sm-inline"> Limpar</span></button>-->
-<!--                </div>-->
+                <h4><strong>Customers</strong></h4>
             </div>
             <div class="col-lg-12 mt-2">
                 <div class="card">
@@ -27,18 +14,21 @@
                                 <th style="width: 30%;">Name</th>
                                 <th style="width: 30%;">Email</th>
                                 <th style="width: 10%;">Phone</th>
-                                <th style="width: 5%;">Actions</th>
+                                <th style="width: 5%;" class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let customer of customers">
                                 <td>{{customer.name}}</td>
                                 <td>{{customer.email}}</td>
-                                <td>{{customer.phone | date: 'dd/MM/yyyy'}}</td>
-                                <td>
-                                    <a routerLink="/usuarios/editar/{{customer.id}}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-pencil-square-o"></i>
+                                <td>{{customer.phone}}</td>
+                                <td class="text-center d-flex justify-content-between">
+                                    <a routerLink="/customers/{{customer.id}}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-edit"></i>
                                     </a>
+                                    <button class="btn btn-sm btn-danger" (click)="delete(customer)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>

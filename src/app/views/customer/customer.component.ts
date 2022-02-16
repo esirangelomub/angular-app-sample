@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CustomerService} from "../../services/customer.service";
 import {CustomerModel} from "../../models/customer.model";
-import {Observable} from "rxjs";
+import {catchError, Observable, throwError} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'app-customer',
@@ -23,6 +24,25 @@ export class CustomerComponent implements OnInit {
         this.customers$ = this.customerService.getAll();
     }
 
+    delete(customer: CustomerModel) {
+        if (customer.id === undefined || customer.id === null) {
+            return;
+        }
+        if (window.confirm("This action will permanently delete this customer. Do you wish to proceed?")) {
+            this.customerService
+                .delete(customer.id)
+                .pipe(
+                    catchError((error: HttpErrorResponse) => {
+                        alert('Error!');
+                        return throwError(error);
+                    })
+                )
+                .subscribe((response: CustomerModel) => {
+                    alert('Success!');
+                    this.load();
+                });
+        }
+    }
     // retrieveTutorials(): void {
     //     this.customerService.getAll()
     //         .subscribe(

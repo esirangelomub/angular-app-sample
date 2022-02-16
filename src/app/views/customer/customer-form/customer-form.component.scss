@@ -1,0 +1,26 @@
+.container {
+
+    .card {
+        .card-body {
+            .form-group {
+                display: flex;
+                align-items: center;
+                padding: 15px 0;
+
+                .text-error {
+                    font-size: 75%;
+                    position: absolute;
+                    right: 20px;
+                    color: red;
+                }
+            }
+        }
+
+        .card-footer {
+            .btn:disabled {
+                cursor: not-allowed;
+                pointer-events: all !important;
+            }
+        }
+    }
+}
