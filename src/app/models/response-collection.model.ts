@@ -1,4 +1,4 @@
-export interface ResponseModel<TModel> {
+export interface ResponseCollectionModel<TModel> {
     success: boolean,
     message: string,
     data: TModel[];

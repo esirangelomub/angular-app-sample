@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {CustomerModel} from "../models/customer.model";
-import {ResponseModel} from "../models/response.model";
+import {ResponseCollectionModel} from "../models/response-collection.model";
+import {ResponseSingleModel} from "../models/response-single.model";
 
 const baseUrl = 'http://localhost:9090/api/v1/customer';
 @Injectable({
@@ -14,7 +15,7 @@ export class CustomerService {
     }
 
     getAll(): Observable<CustomerModel[]> {
-        return this.http.get<ResponseModel<CustomerModel>>(baseUrl).pipe(
+        return this.http.get<ResponseCollectionModel<CustomerModel>>(baseUrl).pipe(
             map(response => {
                 return response.data;
             })
@@ -22,7 +23,11 @@ export class CustomerService {
     }
 
     get(id: number): Observable<CustomerModel> {
-        return this.http.get<CustomerModel>(`${baseUrl}/${id}`);
+        return this.http.get<ResponseSingleModel<CustomerModel>>(`${baseUrl}/${id}`).pipe(
+            map(response => {
+                return response.data;
+            })
+        );
     }
 
     save(body: CustomerModel, params?: HttpParams): Observable<CustomerModel> {

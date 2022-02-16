@@ -27,6 +27,10 @@ export class CustomerFormComponent implements OnInit, AfterContentInit {
     }
 
     ngAfterContentInit() {
+        const params = this.route.snapshot.paramMap;
+        if (params.has('id')) {
+            this.iID = Number(params.get('id'));
+        }
         this.load();
     }
 
@@ -34,6 +38,7 @@ export class CustomerFormComponent implements OnInit, AfterContentInit {
 
     createForm() {
         this.form = this.formBuilder.group({
+            id: new FormControl({value: null, disabled: false}),
             name: new FormControl({value: null, disabled: false}, [Validators.required]),
             email: new FormControl({value: null, disabled: false}, [Validators.required, Validators.email]),
             phone: new FormControl({value: null, disabled: false}, [Validators.required]),
@@ -47,13 +52,27 @@ export class CustomerFormComponent implements OnInit, AfterContentInit {
             })
         });
 
-        this.form.get('address.country')?.valueChanges.subscribe(value => {
-            this.form.get('address.state')?.setValue(null);
-        })
+        // this.form.get('address.country')?.valueChanges.subscribe(value => {
+        //     this.form.get('address.state')?.setValue(null);
+        // })
     }
 
     load() {
-
+        if (this.iID === undefined || this.iID === null) {
+            return;
+        }
+        this.customerService
+            .get(this.iID)
+            .pipe(
+                catchError((error: HttpErrorResponse) => {
+                    alert('Error!');
+                    return throwError(error);
+                })
+            )
+            .subscribe((response: CustomerModel) => {
+                this.form.patchValue(response);
+                console.log(this.form.getRawValue())
+            });
     }
 
     /** SUBMIT METHODS =================================================================================== */
