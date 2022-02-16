@@ -33,4 +33,4 @@ Start application
 
     sail artisan migrate --seed
 
-You can now access the server at http://localhost:4201
+You can now access the server at http://localhost:4200
